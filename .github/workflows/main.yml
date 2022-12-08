@@ -1,12 +1,16 @@
 name: Upload Website
+#O worlflow seja executado em cada evento PUSH
 on:
   push:
+#Build -> IC e o Deploy -> EC
 jobs:
   build:
+  #Ambiente que serã executado
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [12.x]
+    #Passos a serem seguidos
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -19,6 +23,7 @@ jobs:
         env:
           CI: true
   deploy:
+    #Dependencia do Build pois se falhar o deploy nao sera executado
     needs: build
     runs-on: ubuntu-latest
     steps:
